@@ -6,8 +6,8 @@ using _335as1.Data;
 
 namespace _335as1.Migrations
 {
-    [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(APIDbContext))]
+    partial class APIDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -21,16 +21,15 @@ namespace _335as1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Desciption")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -57,8 +56,8 @@ namespace _335as1.Migrations
                     b.Property<string>("Research")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Telephone")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Tel")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");

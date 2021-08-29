@@ -10,8 +10,8 @@ namespace _335as1.Models {
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Desciption { get; set; }
+        public string Description { get; set; }
         [Required]
-        public int Price { get; set; }
+        public double Price { get; set; }
     }
 }
