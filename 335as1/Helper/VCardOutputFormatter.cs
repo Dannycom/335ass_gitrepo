@@ -15,7 +15,7 @@ namespace _335as1.Helper {
         }
 
         public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding) {
-            CardOut card = (CardOut)context.Object;
+            CardOutDto card = (CardOutDto)context.Object;
             StringBuilder builder = new StringBuilder();
             builder.AppendLine("BEGIN:VCARD");
             builder.AppendLine("VERSION:4.0");

@@ -12,6 +12,7 @@ namespace _335as1.Data {
         public APIDbContext(DbContextOptions<APIDbContext> options): base(options) { }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Comments> Comments { get; set; }
         
         //protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder) {
         //    optionBuilder.UseSqlite("Data Source=MyDatabase.sqlite");

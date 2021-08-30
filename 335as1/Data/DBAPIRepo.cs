@@ -20,6 +20,24 @@ namespace _335as1.Data {
             _dbContext.SaveChanges();
             return s;
         }
+        public Comments WriteComment(Comments comment) {
+            EntityEntry<Comments> e = _dbContext.Comments.Add(comment);
+            Comments c = e.Entity;
+            _dbContext.SaveChanges();
+            return c;
+        }
+        public IEnumerable<Comments> GetComments() {
+            IEnumerable<Comments> comments = _dbContext.Comments.ToList<Comments>();
+            //List<Comments> last5 = new List<Comments>();
+            //int i = -1;
+            //foreach(Comments com in comments) {
+            //    if(i > -6) {
+            //        last5.Add(com);
+            //        i--;
+            //    }
+            //}
+            return comments.TakeLast(5);
+        }
 
         public void DeleteStaff(int id) {
             throw new NotImplementedException();

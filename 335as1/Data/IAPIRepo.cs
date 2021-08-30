@@ -12,6 +12,8 @@ namespace _335as1.Data {
         Staff AddStaff(Staff staff);
         IEnumerable<Product> GetItems();
         IEnumerable<Product> GetItems(string name);
+        Comments WriteComment(Comments comment);
+        IEnumerable<Comments> GetComments();
         void DeleteStaff(int id);
         void SaveChanges();
 

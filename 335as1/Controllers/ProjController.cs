@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 
@@ -91,7 +92,6 @@ namespace _335as1.Controllers {
             else {
                 respHeader = "image/png";
                 fileName = filename4;
-                return PhysicalFile(fileName, respHeader);
             }
             return PhysicalFile(fileName, respHeader);
         }
@@ -144,7 +144,7 @@ namespace _335as1.Controllers {
 
 
 
-            CardOut cardOut = new CardOut();
+            CardOutDto cardOut = new CardOutDto();
             if(staff == null) {
                 cardOut.FirstName = "";
                 cardOut.LastName = "";
@@ -207,7 +207,65 @@ namespace _335as1.Controllers {
             }
         }
 
+        [HttpGet("GetItemPhoto/{id}")]
+        public ActionResult GetItemPhoto(int id) {
 
+            string path = Directory.GetCurrentDirectory();
+            string imgDir = Path.Combine(path, "Images/ItemsImages");
+            string fileName1 = Path.Combine(imgDir, id + ".png");
+            string fileName2 = Path.Combine(imgDir, id + ".jpg");
+            string fileName3 = Path.Combine(imgDir, id + ".gif");
+            string filename4 = Path.Combine(imgDir, "default" + ".png");
+            string respHeader = "";
+            string fileName = "";
+            if(System.IO.File.Exists(fileName1)) {
+                respHeader = "image/png";
+                fileName = fileName1;
+            }
+            else if(System.IO.File.Exists(fileName2)) {
+                respHeader = "image/jpeg";
+                fileName = fileName2;
+            }
+            else if(System.IO.File.Exists(fileName3)) {
+                respHeader = "image/gif";
+                fileName = fileName3;
+            }
+            else {
+                respHeader = "image/png";
+                fileName = filename4;
+            }
+            return PhysicalFile(fileName, respHeader);
+        }
+
+        [HttpPost("WriteComment")]
+        public ActionResult WriteComment(CommentInputDto comment) {
+            Comments c = new Comments { Comment = comment.Comment, Name = comment.Name, Ip = Request.HttpContext.Connection.RemoteIpAddress.ToString(), Time = DateTime.Now };
+            Comments addedComment = _repository.WriteComment(c);
+            //CommentOutDto co = new CommentOutDto { Id = addedComment.Id, Comment = addedComment.Comment, Name = addedComment.Name, Ip = addedComment.Ip, Time = addedComment.Time };
+            //return CreatedAtAction(nameof(WriteComment), new { id = co.Id }, co);
+            return Ok(addedComment.Comment);
+        }
+
+        [HttpGet("GetComments")]
+        public ActionResult GetComments() {
+            IEnumerable<Comments> comments = _repository.GetComments();
+            comments = comments.Reverse();
+            String last5Out = "<html><head><title></title></head><body>\n";
+            foreach(Comments com in comments) {
+                String s = string.Format("<p>{0} &mdash; {1}</p>\n", com.Comment, com.Name);
+                last5Out = last5Out + s;
+            }
+            last5Out = last5Out + "</body></html>";
+
+
+
+            ContentResult c = new ContentResult {
+                Content = last5Out,
+                ContentType = "text/html",
+                StatusCode = (int)HttpStatusCode.OK,
+            };
+            return c;
+        }
 
         public IActionResult Index() {
             return View();
